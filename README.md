@@ -1,12 +1,12 @@
 # MarkWahlberg
-A templating engine for complex data inside documents. It's not markup, it's MarkWahlberg.
+A templating engine for complex data inside Github Markdown documents. It's not markup, it's not Markdown, it's MarkWahlberg.
 
 
 ## Getting started
 Run `npm install mark-wahlberg`
 
 ## What is a MarkWahlberg template?
-Glad you asked. A template is just a string containing zero or more embedded data points.
+Glad you asked. A template is just a string, optionally in Markdown syntax, containing zero or more embedded data points.
 This is a template:
 ```
 When you go to the store, remember to pick up 4 gallons of milk.
