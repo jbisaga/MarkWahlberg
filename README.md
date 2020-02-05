@@ -11,7 +11,7 @@ This is a template:
 ```
 When you go to the store, remember to pick up 4 gallons of milk.
 ```
-Now, it doesn't contain any embedded information, but it _is_ a template. A template with MarkWahlberg-embedded information would be
+Now, it doesn't contain any embedded objectts, but it _is_ a template. A template with MarkWahlberg-embedded information would be
 ```
 When you go to the ${{name: milkPlace, type: STRING, defaultValue: 'store'}}, 
 remember to pick up ${{name: milkGallonsCount, type: NUMBER, defaultValue: 4}} gallons of
