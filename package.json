@@ -4,7 +4,9 @@
   "description": "A funky bunch of Markdown templating goodness.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "tdd": "npm run test -- --watch",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

@@ -1,12 +1,12 @@
 import * as fs from "fs";
-import { MarkWahlberg } from "../src/MarkWahlberg";
-import { MarkVariable } from "../src/MarkVariable";
+import { MarkWahlberg } from "../../src/MarkWahlberg";
+import { MarkVariable } from "../../src/MarkVariable";
 
 const originalFileText = fs.readFileSync(__dirname+'/../test-data/markdown1.md').toString('utf8');
 
-describe('MarkWahlberg.js', function(){
-    describe('Markvariable parseSerializedProp()', function(){
-        it ('rejects string with disallowed characters in key or no key at all', function(done){
+describe('MarkWahlberg.js', () => {
+    describe('Markvariable parseSerializedProp()', () => {
+        it ('rejects string with disallowed characters in key or no key at all', (done)=>{
             let badPatterns = [
                 "'key1': 'bar'",
                 "'key1: 'bar'",
@@ -27,28 +27,8 @@ describe('MarkWahlberg.js', function(){
             done();
         });
 
-        it ('rejects string with disallowed characters in value or no value at all', function(done){
-            let badPatterns = [
-                "key: foo",
-                "key: 'foo",
-                "key: foo'",
-                "key: 'foo'1",
-                "key: 'foo'?",
-                "key: 1f",
-                "key: 'foo',",
-                "key: ",
-            ];
 
-            badPatterns.forEach( pattern => {
-                expect( () => {
-                    MarkVariable.parseSerializedProp(pattern);
-                }).toThrow(TypeError);
-            });
-
-            done();
-        });
-
-        it ('rejects string with well-formed key and value but no colon', function (done) {
+        it ('rejects string with well-formed key and value but no colon',  (done) => {
             let badPatterns = [
                 "key 'value'",
                 "key'value'",
@@ -65,7 +45,7 @@ describe('MarkWahlberg.js', function(){
             done();
         });
 
-        it ('parses string with varying amounts of whitespace', function (done) {
+        it ('parses string with varying amounts of whitespace',  (done) => {
             let strings = [
                 "foo: 'bar'",
                 "      foo: 'bar'",
@@ -86,14 +66,14 @@ describe('MarkWahlberg.js', function(){
         });
     });
 
-    describe('MarkVariable deserialize()', function(){
-        it ('deserializes well-formed variable string', function(done){
-            let variable = "${{type: 'string', name: 'BAT!', value: '', defaultValue: 'yeee' }}";
+    describe('MarkVariable deserialize()', () => {
+        it ('deserializes well-formed variable string', (done) => {
+            let variable = "${{type: STRING, name: BAT!, value: '', defaultValue: 'yeee' }}";
             let markObj = MarkVariable.deserialize(variable);
 
             expect(markObj).toBeTruthy();
             expect(markObj.type).toBeTruthy();
-            expect(markObj.type).toBe('string');
+            expect(markObj.type).toBe('STRING');
             expect(markObj.name).toBeTruthy();
             expect(markObj.name).toBe('BAT!');
             expect(markObj.value).toBe('')
@@ -104,9 +84,9 @@ describe('MarkWahlberg.js', function(){
         });
     });
 
-    describe('MarkVariable().serialize()', function(){
-        it ('serializes a (standard formed) property so it equals the same thing deserialized again', function(done){
-            let variableStr = "${{type: 'string', name: 'dingus', defaultValue: 'dangus'}}";
+    describe('MarkVariable().serialize()', () => {
+        it ('serializes a (standard formed) property so it equals the same thing deserialized again', (done) => {
+            let variableStr = "${{type: STRING, name: dingus, defaultValue: 'dangus'}}";
             let variable = new MarkVariable(variableStr);
 
             let serialized = variable.serialize();
@@ -127,14 +107,14 @@ describe('MarkWahlberg.js', function(){
     });
      */
 
-    describe('property checks', function(){
-        it ('gets no variables for constructor with empty string', function(done){
+    describe('property checks', () => {
+        it ('gets no variables for constructor with empty string', (done) => {
             let empty = new MarkWahlberg();
 
             expect(empty.getVariables()).toHaveLength(0);
             done();
         });
-        it ('has empty text for constructor with empty string', function(done){
+        it ('has empty text for constructor with empty string', (done) => {
             let empty = new MarkWahlberg();
 
             expect(empty.getText()).toBe('');
@@ -142,7 +122,7 @@ describe('MarkWahlberg.js', function(){
         });
 
 
-        it ('has 2 variables for test Mark text with 2 variables', function(done){
+        it ('has 2 variables for test Mark text with 2 variables', (done) => {
             let mark = new MarkWahlberg(originalFileText);
             expect(mark.getVariables()).toHaveLength(2);
             done();
