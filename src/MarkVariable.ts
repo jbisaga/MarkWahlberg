@@ -9,6 +9,7 @@ enum MarkVariableType {
     NULL = 'NULL'
 };
 
+export type MarkVariableValueType = string | number | boolean | null;
 
 const MarkVariableInternalTypePattern = {
     [MarkVariableType.STRING]: () => /'(.*)'/,
@@ -172,5 +173,21 @@ export class MarkVariable {
         });
 
         return '${{' + internalStr + '}}';
+    }
+
+    public matchesType(value: any): boolean{
+        if (this.type === MarkVariableType.STRING){
+            return typeof value === 'string';
+        }
+        if (this.type === MarkVariableType.BOOLEAN){
+            return typeof value === 'boolean';
+        }
+        if (this.type === MarkVariableType.NUMBER){
+            return typeof value === 'number';
+        }
+        if (this.type === MarkVariableType.NULL){
+            return value === null;
+        }
+        return false;
     }
 }

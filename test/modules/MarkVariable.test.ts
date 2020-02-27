@@ -96,6 +96,69 @@ describe('MarkVariable', () => {
         });
     });
 
+    describe ('matchesType()', () => {
+        it ('matches correctly for string type', () => {
+            const variableStr = "${{type: STRING, name: foo, defaultValue: ''}}";
+            const variable = new MarkVariable(variableStr);
+
+            expect(variable.matchesType('it a string')).toEqual(true);
+            expect(variable.matchesType('')).toEqual(true);
+            expect(variable.matchesType(123123)).toEqual(false);
+            expect(variable.matchesType(123.123)).toEqual(false);
+            expect(variable.matchesType({foo: 'bar'})).toEqual(false);
+            expect(variable.matchesType(['foo', 'bar'])).toEqual(false);
+            expect(variable.matchesType(true)).toEqual(false);
+            expect(variable.matchesType(false)).toEqual(false);
+            expect(variable.matchesType(null)).toEqual(false);
+            expect(variable.matchesType(undefined)).toEqual(false);
+        });
+        it ('matches correctly for number type', () => {
+            const variableStr = "${{type: NUMBER, name: foo, defaultValue: 11}}";
+            const variable = new MarkVariable(variableStr);
+
+            expect(variable.matchesType('it a string')).toEqual(false);
+            expect(variable.matchesType('')).toEqual(false);
+            expect(variable.matchesType(123123)).toEqual(true);
+            expect(variable.matchesType(123.123)).toEqual(true);
+            expect(variable.matchesType({foo: 12})).toEqual(false);
+            expect(variable.matchesType([1, 2])).toEqual(false);
+            expect(variable.matchesType(true)).toEqual(false);
+            expect(variable.matchesType(false)).toEqual(false);
+            expect(variable.matchesType(null)).toEqual(false);
+            expect(variable.matchesType(undefined)).toEqual(false);
+        });
+        it ('matches correctly for boolean type', () => {
+            const variableStr = "${{type: BOOLEAN, name: foo, defaultValue: false}}";
+            const variable = new MarkVariable(variableStr);
+
+            expect(variable.matchesType('it a string')).toEqual(false);
+            expect(variable.matchesType('')).toEqual(false);
+            expect(variable.matchesType(123123)).toEqual(false);
+            expect(variable.matchesType(123.123)).toEqual(false);
+            expect(variable.matchesType({foo: 12})).toEqual(false);
+            expect(variable.matchesType([1, 2])).toEqual(false);
+            expect(variable.matchesType(true)).toEqual(true);
+            expect(variable.matchesType(false)).toEqual(true);
+            expect(variable.matchesType(null)).toEqual(false);
+            expect(variable.matchesType(undefined)).toEqual(false);
+        });
+        it ('matches correctly for null type', () => {
+            const variableStr = "${{type: NULL, name: foo, defaultValue: null}}";
+            const variable = new MarkVariable(variableStr);
+
+            expect(variable.matchesType('it a string')).toEqual(false);
+            expect(variable.matchesType('')).toEqual(false);
+            expect(variable.matchesType(123123)).toEqual(false);
+            expect(variable.matchesType(123.123)).toEqual(false);
+            expect(variable.matchesType({foo: 12})).toEqual(false);
+            expect(variable.matchesType([1, 2])).toEqual(false);
+            expect(variable.matchesType(true)).toEqual(false);
+            expect(variable.matchesType(false)).toEqual(false);
+            expect(variable.matchesType(null)).toEqual(true);
+            expect(variable.matchesType(undefined)).toEqual(false);
+        });
+    });
+
     /*
     describe ('MarkVariable constructor parsing', function(){
         it ('parses a standard variable and builds an object with all properties', function(done){});
