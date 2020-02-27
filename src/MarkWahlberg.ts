@@ -8,10 +8,11 @@
  --------------------------------------------------------------------------------------- */
 
 import {MarkVariable, VARIABLE_REGEX} from "./MarkVariable";
+import { TemplateVariable } from "./TemplateVariable";
 
 export class MarkWahlberg {
     private text: string;
-    private variables: MarkVariable[];
+    private variables: TemplateVariable[];
 
     constructor(text = ''){
         this.loadText(text);
@@ -25,9 +26,9 @@ export class MarkWahlberg {
         let matchResult;
         let vars = [];
         while( (matchResult = regex.exec(t)) !== null){
-            let match = matchResult[0];
-            // let startingIdx = regex.lastIndex - match.length;
-            vars.push(new MarkVariable(match));
+            const match = matchResult[0];
+            const startingIdx = regex.lastIndex - match.length;
+            vars.push(new TemplateVariable(match, startingIdx));
         }
 
         this.variables = vars;
@@ -46,7 +47,7 @@ export class MarkWahlberg {
         return this.text;
     }
 
-    getVariables(): MarkVariable[] {
+    getVariables(): TemplateVariable[] {
         return this.variables;
     }
 }
