@@ -1,6 +1,48 @@
-import { MarkVariable } from "../../src/MarkVariable";
+import { MarkVariable, MarkVariableType } from "../../src/MarkVariable";
 
 describe('MarkVariable', () => {
+    describe('types', () => {
+        describe('number', () => {
+            let variable1: MarkVariable;
+            let variable2: MarkVariable;
+            beforeEach(() => {
+                variable1 = new MarkVariable('${{ name: variable1, type: NUMBER, defaultValue: 10}}');
+                variable2 = new MarkVariable('${{ name: variable2, type: NUMBER, value: 123.45, defaultValue: 10}}');
+            });
+
+            it ('assigns type', () => {
+                expect(variable1.type).toBe(MarkVariableType.NUMBER);
+                expect(variable2.type).toBe(MarkVariableType.NUMBER);
+            });
+            it ('assigns internal values correctly', () => {
+                expect(variable1.value).toBeFalsy();
+                expect(variable1.defaultValue).toBe(10);
+                expect(variable2.value).toBe(123.45);
+                expect(variable2.defaultValue).toBe(10);
+            });
+        });
+        describe('string', () => {
+            let variable1: MarkVariable;
+            let variable2: MarkVariable;
+            beforeEach(() => {
+                variable1 = new MarkVariable('${{ name: variable1, type: NUMBER, defaultValue: \'foo\'}}');
+                variable2 = new MarkVariable('${{ name: variable2, type: NUMBER, value: \'baz\', defaultValue: \'bat\'}}');
+            });
+
+            it ('assigns type', () => {
+                expect(variable1.type).toBe(MarkVariableType.STRING);
+                expect(variable2.type).toBe(MarkVariableType.STRING);
+            });
+            it ('assigns internal values correctly', () => {
+                expect(variable1.value).toBeFalsy();
+                expect(variable1.defaultValue).toBe('foo');
+                expect(variable2.value).toBe('baz');
+                expect(variable2.defaultValue).toBe('bat');
+            });
+        });
+
+    });
+
     describe('Markvariable parseSerializedProp()', () => {
         it ('rejects string with disallowed characters in key or no key at all', (done)=>{
             let badPatterns = [
@@ -101,61 +143,61 @@ describe('MarkVariable', () => {
             const variableStr = "${{type: STRING, name: foo, defaultValue: ''}}";
             const variable = new MarkVariable(variableStr);
 
-            expect(variable.matchesType('it a string')).toEqual(true);
-            expect(variable.matchesType('')).toEqual(true);
-            expect(variable.matchesType(123123)).toEqual(false);
-            expect(variable.matchesType(123.123)).toEqual(false);
+            expect(variable.matchesType('it a string')).toBe(true);
+            expect(variable.matchesType('')).toBe(true);
+            expect(variable.matchesType(123123)).toBe(false);
+            expect(variable.matchesType(123.123)).toBe(false);
             expect(variable.matchesType({foo: 'bar'})).toEqual(false);
             expect(variable.matchesType(['foo', 'bar'])).toEqual(false);
-            expect(variable.matchesType(true)).toEqual(false);
-            expect(variable.matchesType(false)).toEqual(false);
-            expect(variable.matchesType(null)).toEqual(false);
-            expect(variable.matchesType(undefined)).toEqual(false);
+            expect(variable.matchesType(true)).toBe(false);
+            expect(variable.matchesType(false)).toBe(false);
+            expect(variable.matchesType(null)).toBe(false);
+            expect(variable.matchesType(undefined)).toBe(false);
         });
         it ('matches correctly for number type', () => {
             const variableStr = "${{type: NUMBER, name: foo, defaultValue: 11}}";
             const variable = new MarkVariable(variableStr);
 
-            expect(variable.matchesType('it a string')).toEqual(false);
-            expect(variable.matchesType('')).toEqual(false);
-            expect(variable.matchesType(123123)).toEqual(true);
-            expect(variable.matchesType(123.123)).toEqual(true);
+            expect(variable.matchesType('it a string')).toBe(false);
+            expect(variable.matchesType('')).toBe(false);
+            expect(variable.matchesType(123123)).toBe(true);
+            expect(variable.matchesType(123.123)).toBe(true);
             expect(variable.matchesType({foo: 12})).toEqual(false);
             expect(variable.matchesType([1, 2])).toEqual(false);
-            expect(variable.matchesType(true)).toEqual(false);
-            expect(variable.matchesType(false)).toEqual(false);
-            expect(variable.matchesType(null)).toEqual(false);
-            expect(variable.matchesType(undefined)).toEqual(false);
+            expect(variable.matchesType(true)).toBe(false);
+            expect(variable.matchesType(false)).toBe(false);
+            expect(variable.matchesType(null)).toBe(false);
+            expect(variable.matchesType(undefined)).toBe(false);
         });
         it ('matches correctly for boolean type', () => {
             const variableStr = "${{type: BOOLEAN, name: foo, defaultValue: false}}";
             const variable = new MarkVariable(variableStr);
 
-            expect(variable.matchesType('it a string')).toEqual(false);
-            expect(variable.matchesType('')).toEqual(false);
-            expect(variable.matchesType(123123)).toEqual(false);
-            expect(variable.matchesType(123.123)).toEqual(false);
+            expect(variable.matchesType('it a string')).toBe(false);
+            expect(variable.matchesType('')).toBe(false);
+            expect(variable.matchesType(123123)).toBe(false);
+            expect(variable.matchesType(123.123)).toBe(false);
             expect(variable.matchesType({foo: 12})).toEqual(false);
             expect(variable.matchesType([1, 2])).toEqual(false);
-            expect(variable.matchesType(true)).toEqual(true);
-            expect(variable.matchesType(false)).toEqual(true);
-            expect(variable.matchesType(null)).toEqual(false);
-            expect(variable.matchesType(undefined)).toEqual(false);
+            expect(variable.matchesType(true)).toBe(true);
+            expect(variable.matchesType(false)).toBe(true);
+            expect(variable.matchesType(null)).toBe(false);
+            expect(variable.matchesType(undefined)).toBe(false);
         });
         it ('matches correctly for null type', () => {
             const variableStr = "${{type: NULL, name: foo, defaultValue: null}}";
             const variable = new MarkVariable(variableStr);
 
-            expect(variable.matchesType('it a string')).toEqual(false);
-            expect(variable.matchesType('')).toEqual(false);
-            expect(variable.matchesType(123123)).toEqual(false);
-            expect(variable.matchesType(123.123)).toEqual(false);
+            expect(variable.matchesType('it a string')).toBe(false);
+            expect(variable.matchesType('')).toBe(false);
+            expect(variable.matchesType(123123)).toBe(false);
+            expect(variable.matchesType(123.123)).toBe(false);
             expect(variable.matchesType({foo: 12})).toEqual(false);
             expect(variable.matchesType([1, 2])).toEqual(false);
-            expect(variable.matchesType(true)).toEqual(false);
-            expect(variable.matchesType(false)).toEqual(false);
-            expect(variable.matchesType(null)).toEqual(true);
-            expect(variable.matchesType(undefined)).toEqual(false);
+            expect(variable.matchesType(true)).toBe(false);
+            expect(variable.matchesType(false)).toBe(false);
+            expect(variable.matchesType(null)).toBe(true);
+            expect(variable.matchesType(undefined)).toBe(false);
         });
     });
 
