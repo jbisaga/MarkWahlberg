@@ -41,8 +41,8 @@ describe ('MarkWahlberg', () => {
                 files = {
                     initial: fs.readFileSync(__dirname + '/../test-data/all-have-values/initial.md').toString('utf8'),
                     noPassedValues: fs.readFileSync(__dirname + '/../test-data/all-have-values/noPassedValues.md').toString('utf8'),
-            }
-            })
+                }
+            });
 
             beforeEach(() => {
                 mark = new MarkWahlberg(files.initial);

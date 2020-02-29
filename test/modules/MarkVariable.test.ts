@@ -91,7 +91,6 @@ describe('MarkVariable', () => {
                 "foo     :       'bar'",
                 "   foo: 100   ",
                 "   foo:        true",
-                "foo:    null        ",
             ];
 
             strings.forEach( str => {
@@ -182,21 +181,6 @@ describe('MarkVariable', () => {
             expect(variable.matchesType(true)).toBe(true);
             expect(variable.matchesType(false)).toBe(true);
             expect(variable.matchesType(null)).toBe(false);
-            expect(variable.matchesType(undefined)).toBe(false);
-        });
-        it ('matches correctly for null type', () => {
-            const variableStr = "${{type: NULL, name: foo, defaultValue: null}}";
-            const variable = new MarkVariable(variableStr);
-
-            expect(variable.matchesType('it a string')).toBe(false);
-            expect(variable.matchesType('')).toBe(false);
-            expect(variable.matchesType(123123)).toBe(false);
-            expect(variable.matchesType(123.123)).toBe(false);
-            expect(variable.matchesType({foo: 12})).toEqual(false);
-            expect(variable.matchesType([1, 2])).toEqual(false);
-            expect(variable.matchesType(true)).toBe(false);
-            expect(variable.matchesType(false)).toBe(false);
-            expect(variable.matchesType(null)).toBe(true);
             expect(variable.matchesType(undefined)).toBe(false);
         });
     });

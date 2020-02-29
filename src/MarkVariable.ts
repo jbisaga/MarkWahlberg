@@ -6,7 +6,6 @@ export enum MarkVariableType {
     STRING = 'STRING',
     NUMBER = 'NUMBER',
     BOOLEAN = 'BOOLEAN',
-    NULL = 'NULL'
 };
 
 export type MarkVariableValueType = string | number | boolean | null;
@@ -15,7 +14,6 @@ const MarkVariableInternalTypePattern = {
     [MarkVariableType.STRING]: () => /'(.*)'/,
     [MarkVariableType.NUMBER]: () => /\d+/,
     [MarkVariableType.BOOLEAN]: () => /(true|false)/,
-    [MarkVariableType.NULL]: () => /null/
 };
 
 const MarkVariableTypeConvert =  {
@@ -26,7 +24,6 @@ const MarkVariableTypeConvert =  {
     },
     [MarkVariableType.NUMBER]: (val: any) => val,
     [MarkVariableType.BOOLEAN]: (val: any) => val,
-    [MarkVariableType.NULL]: (val: any) => val,
 }
 
 export interface DeserializedMarkVariableObject {
@@ -184,9 +181,6 @@ export class MarkVariable {
         }
         if (this.type === MarkVariableType.NUMBER){
             return typeof value === 'number';
-        }
-        if (this.type === MarkVariableType.NULL){
-            return value === null;
         }
         return false;
     }
