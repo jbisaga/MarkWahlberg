@@ -9,6 +9,7 @@
 
 import {MarkVariable, VARIABLE_REGEX, MarkVariableValueType} from "./MarkVariable";
 import { TemplateVariable } from "./TemplateVariable";
+import { cloneDeep } from "lodash";
 
 interface VariableValue {
     [key: string]: MarkVariableValueType
@@ -73,8 +74,11 @@ export class MarkWahlberg {
             throw new Error(`Variables in template without value: ${missingVarNames.join(',')}`);
         }
 
+        // create a copy of the variables so that we can change their indexes on the fly
+        let variables = cloneDeep(this.variables);
+
         // go through the template, replacing variables with values
-        this.variables.forEach(templateVariable => {
+        variables.forEach((templateVariable, index) => {
             let variableValue: any = undefined;
             if (Object.keys(varValues).includes(templateVariable.variable.name)){
                 variableValue = varValues[templateVariable.variable.name];
@@ -90,13 +94,20 @@ export class MarkWahlberg {
             }
 
             const before = finalText.slice(0, templateVariable.index);
-            const after = finalText.slice(templateVariable.index);
+            let after = finalText.slice(templateVariable.index);
             const textVarRegex = VARIABLE_REGEX();
             const match: string = textVarRegex.exec(after)[0];
 
             if (variableValue !== undefined){
-                after.replace(match, variableValue);
+                after = after.replace(match, variableValue);
             }
+
+            // change following indexes so we can parse them the right way
+            variables.forEach((v, idx)=>{
+                if (idx > index){
+                    v.index -= match.length;
+                }
+            });
 
             finalText = before + after;
         });
