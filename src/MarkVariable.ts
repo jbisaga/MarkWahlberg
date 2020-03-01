@@ -22,8 +22,8 @@ const MarkVariableTypeConvert =  {
             return matched;
         })
     },
-    [MarkVariableType.NUMBER]: (val: any) => val,
-    [MarkVariableType.BOOLEAN]: (val: any) => val,
+    [MarkVariableType.NUMBER]: (val: string) => parseFloat(val),
+    [MarkVariableType.BOOLEAN]: (val: string) => val === 'true',
 }
 
 export interface DeserializedMarkVariableObject {
@@ -58,11 +58,11 @@ export class MarkVariable {
             this.type = deserialized.type;
         }
 
-        if (deserialized.value) {
+        if (deserialized.value !== undefined) {
             this.value = deserialized.value;
         }
 
-        if (deserialized.defaultValue){
+        if (deserialized.defaultValue !== undefined){
             this.defaultValue = deserialized.defaultValue;
         }
 

@@ -89,7 +89,7 @@ export class MarkWahlberg {
                 throw new Error(`Cannot assign ${variableValue} to variable ${templateVariable.variable.name}`);
             }
 
-            const before = finalText.slice(0, templateVariable.index)
+            const before = finalText.slice(0, templateVariable.index);
             const after = finalText.slice(templateVariable.index);
             const textVarRegex = VARIABLE_REGEX();
             const match: string = textVarRegex.exec(after)[0];

@@ -1,7 +1,7 @@
 import { MarkVariable, MarkVariableType } from "../../src/MarkVariable";
 
 describe('MarkVariable', () => {
-    describe('types', () => {
+    describe('parse for correct types', () => {
         describe('number', () => {
             let variable1: MarkVariable;
             let variable2: MarkVariable;
@@ -25,8 +25,8 @@ describe('MarkVariable', () => {
             let variable1: MarkVariable;
             let variable2: MarkVariable;
             beforeEach(() => {
-                variable1 = new MarkVariable('${{ name: variable1, type: NUMBER, defaultValue: \'foo\'}}');
-                variable2 = new MarkVariable('${{ name: variable2, type: NUMBER, value: \'baz\', defaultValue: \'bat\'}}');
+                variable1 = new MarkVariable('${{ name: variable1, type: STRING, defaultValue: \'foo\'}}');
+                variable2 = new MarkVariable('${{ name: variable2, type: STRING, value: \'baz\', defaultValue: \'bat\'}}');
             });
 
             it ('assigns type', () => {
@@ -38,6 +38,26 @@ describe('MarkVariable', () => {
                 expect(variable1.defaultValue).toBe('foo');
                 expect(variable2.value).toBe('baz');
                 expect(variable2.defaultValue).toBe('bat');
+            });
+        });
+
+        describe('boolean', () => {
+            let variable1: MarkVariable;
+            let variable2: MarkVariable;
+            beforeEach(() => {
+                variable1 = new MarkVariable('${{ name: variable1, type: BOOLEAN, defaultValue: true}}');
+                variable2 = new MarkVariable('${{ name: variable2, type: BOOLEAN, value: true, defaultValue: false}}');
+            });
+
+            it ('assigns type', () => {
+                expect(variable1.type).toBe(MarkVariableType.BOOLEAN);
+                expect(variable2.type).toBe(MarkVariableType.BOOLEAN);
+            });
+            it ('assigns internal values correctly', () => {
+                expect(variable1.value).toBeFalsy();
+                expect(variable1.defaultValue).toBe(true);
+                expect(variable2.value).toBe(true);
+                expect(variable2.defaultValue).toBe(false);
             });
         });
 
