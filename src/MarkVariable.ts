@@ -6,6 +6,7 @@ export enum MarkVariableType {
     STRING = 'STRING',
     NUMBER = 'NUMBER',
     BOOLEAN = 'BOOLEAN',
+    UNKNOWN = 'UNKNOWN'
 };
 
 export type MarkVariableValueType = string | number | boolean | null;
@@ -14,6 +15,7 @@ const MarkVariableInternalTypePattern = {
     [MarkVariableType.STRING]: () => /'(.*)'/,
     [MarkVariableType.NUMBER]: () => /\d+/,
     [MarkVariableType.BOOLEAN]: () => /(true|false)/,
+    [MarkVariableType.UNKNOWN]: () => new RegExp(''),
 };
 
 const MarkVariableTypeConvert =  {
@@ -24,6 +26,12 @@ const MarkVariableTypeConvert =  {
     },
     [MarkVariableType.NUMBER]: (val: string) => parseFloat(val),
     [MarkVariableType.BOOLEAN]: (val: string) => val === 'true',
+    [MarkVariableType.UNKNOWN]: (val: string) => val,
+}
+
+export interface VariableValueTypeValidationResult {
+    valid: boolean;
+    type: MarkVariableType
 }
 
 export interface DeserializedMarkVariableObject {
@@ -108,10 +116,21 @@ export class MarkVariable {
         if (!valuePart && !defaultValuePart){
             throw new Error(`${text} does not have a value or a defaultValue`);
         }
-        if (valuePart && MarkVariable.validateValue(finalType, valuePart[1])){
+
+        const requireValidation = (given: any) => {
+            const result = MarkVariable.validateValue(finalType, given);
+
+            if (!result.valid){
+                throw new TypeError(`${internalObj.name} is a ${finalType}, ${result.type} given`)
+            }
+        };
+
+        if (valuePart){
+            requireValidation(valuePart[1]);
             internalObj.value = MarkVariable.convertValue(valuePart[1], finalType);
         }
-        if (defaultValuePart && MarkVariable.validateValue(finalType, defaultValuePart[1])){
+        if (defaultValuePart){
+            requireValidation(defaultValuePart[1]);
             internalObj.defaultValue = MarkVariable.convertValue(defaultValuePart[1], finalType);
         }
 
@@ -131,8 +150,30 @@ export class MarkVariable {
         return [ key, value ];
     };
 
-    private static validateValue(type: MarkVariableType, value: any){
-        return MarkVariableInternalTypePattern[type]().test(value);
+    private static validateValue(type: MarkVariableType, value: any): VariableValueTypeValidationResult{
+        if (MarkVariableInternalTypePattern[type]().test(value)){
+            // all good
+            return {
+                valid: true,
+                type: type
+            }
+        } else {
+            // find the actual type of the given value
+            let givenType = MarkVariableType.UNKNOWN;
+            const otherTypes = Object.values(MarkVariableType).filter(t => {
+                return t !== type && t !== MarkVariableType.UNKNOWN;
+            });
+            otherTypes.forEach((t) => {
+                if (MarkVariableInternalTypePattern[t]().test(value)){
+                    givenType = t;
+                }
+            });
+
+            return {
+                valid: false,
+                type: givenType,
+            }
+        }
     }
 
     private static convertValue(value: any, type: MarkVariableType) : any {

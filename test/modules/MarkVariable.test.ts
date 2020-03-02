@@ -123,10 +123,42 @@ describe('MarkVariable', () => {
         });
     });
 
+    describe('Type validation', () => {
+        describe ('string', () => {
+            it ('throws error for incorrect default value', () => {
+                const badStr1 = '${{type: STRING, name: variable1, defaultValue: 10}}';
+                const badStr2 = '${{type: STRING, name: variable1, defaultValue: true}}';
+
+                expect(() => {
+                    new MarkVariable(badStr1);
+                }).toThrow(new TypeError('variable1 is a STRING, NUMBER given'));
+
+                expect(() => {
+                    new MarkVariable(badStr2);
+                }).toThrow(new TypeError('variable1 is a STRING, BOOLEAN given'));
+            });
+
+            it ('throws error for incorrect value', () => {
+                const badStr1 = '${{type: STRING, name: variable1, value: 30, defaultValue: \'foo\'}}';
+                const badStr2 = '${{type: STRING, name: variable1, value: true, udefaultValue: \'bar\'}}';
+
+                expect(() => {
+                    new MarkVariable(badStr1);
+                }).toThrow(new TypeError('variable1 is a STRING, NUMBER given'));
+
+                expect(() => {
+                    new MarkVariable(badStr2);
+                }).toThrow(new TypeError('variable1 is a STRING, BOOLEAN given'));
+            });
+        });
+
+        // TODO: add tests for number and boolean values
+    });
+
     describe('MarkVariable deserialize()', () => {
         it ('deserializes well-formed variable string', (done) => {
-            let variable = "${{type: STRING, name: BAT!, value: '', defaultValue: 'yeee' }}";
-            let markObj = MarkVariable.deserialize(variable);
+            const variable = "${{type: STRING, name: BAT!, value: '', defaultValue: 'yeee' }}";
+            const markObj = MarkVariable.deserialize(variable);
 
             expect(markObj).toBeTruthy();
             expect(markObj.type).toBeTruthy();
