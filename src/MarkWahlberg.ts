@@ -90,7 +90,7 @@ export class MarkWahlberg {
 
             // validate value before we replace
             if (!templateVariable.variable.matchesType(variableValue)){
-                throw new Error(`Cannot assign ${variableValue} to variable ${templateVariable.variable.name}`);
+                throw new TypeError(`Cannot assign ${variableValue} to variable ${templateVariable.variable.name}`);
             }
 
             const before = finalText.slice(0, templateVariable.index);

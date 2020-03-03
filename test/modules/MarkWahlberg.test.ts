@@ -41,6 +41,7 @@ describe ('MarkWahlberg', () => {
                 files = {
                     initial: fs.readFileSync(__dirname + '/../test-data/all-have-values/initial.md').toString('utf8'),
                     noPassedValues: fs.readFileSync(__dirname + '/../test-data/all-have-values/noPassedValues.md').toString('utf8'),
+                    passedValues: fs.readFileSync(__dirname + '/../test-data/all-have-values/passedValues.md').toString('utf8'),
                 }
             });
 
@@ -56,7 +57,28 @@ describe ('MarkWahlberg', () => {
                 expect(strict).toEqual(files.noPassedValues);
             });
 
-            //it ('correctly assigns given values to variables', () => {});
+            it ('correctly assigns given values to variables', () => {
+                const passed = {variable1: 'it\'s a value woo', variable2: -999.999};
+
+                const notStrict = mark.parse(passed);
+                const strict = mark.parse(passed, true);
+
+                expect(notStrict).toEqual(files.passedValues);
+                expect(strict).toEqual(files.passedValues);
+            });
+
+            it ('throws error for given values of invalid types', () => {
+                const passed = {variable1: false, variable2: 'stringy'};
+                const expectedErrMessage = 'Cannot assign false to variable variable1';
+
+                expect(() => {
+                    mark.parse(passed);
+                }).toThrow(new TypeError(expectedErrMessage));
+
+                expect(() => {
+                    mark.parse(passed, true);
+                }).toThrow(new TypeError(expectedErrMessage));
+            })
         })
     });
 });
