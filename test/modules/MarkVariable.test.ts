@@ -152,7 +152,61 @@ describe('MarkVariable', () => {
             });
         });
 
-        // TODO: add tests for number and boolean values
+        describe ('number', () => {
+            it ('throws error for incorrect default value', () => {
+                const badStr1 = '${{type: NUMBER, name: variable1, defaultValue: \'10\'}}';
+                const badStr2 = '${{type: NUMBER, name: variable1, defaultValue: true}}';
+
+                expect(() => {
+                    new MarkVariable(badStr1);
+                }).toThrow(new TypeError('variable1 is a NUMBER, STRING given'));
+
+                expect(() => {
+                    new MarkVariable(badStr2);
+                }).toThrow(new TypeError('variable1 is a NUMBER, BOOLEAN given'));
+            });
+
+            it ('throws error for incorrect value', () => {
+                const badStr1 = '${{type: NUMBER, name: variable1, value: \'foobar\', defaultValue: -155.53}}';
+                const badStr2 = '${{type: NUMBER, name: variable1, value: false, udefaultValue: 399}}';
+
+                expect(() => {
+                    new MarkVariable(badStr1);
+                }).toThrow(new TypeError('variable1 is a NUMBER, STRING given'));
+
+                expect(() => {
+                    new MarkVariable(badStr2);
+                }).toThrow(new TypeError('variable1 is a NUMBER, BOOLEAN given'));
+            });
+        });
+
+        describe ('boolean', () => {
+            it ('throws error for incorrect default value', () => {
+                const badStr1 = '${{type: BOOLEAN, name: variable1, defaultValue: \'foo bar\'}}';
+                const badStr2 = '${{type: BOOLEAN, name: variable1, defaultValue: 100.8}}';
+
+                expect(() => {
+                    new MarkVariable(badStr1);
+                }).toThrow(new TypeError('variable1 is a BOOLEAN, STRING given'));
+
+                expect(() => {
+                    new MarkVariable(badStr2);
+                }).toThrow(new TypeError('variable1 is a BOOLEAN, NUMBER given'));
+            });
+
+            it ('throws error for incorrect value', () => {
+                const badStr1 = '${{type: BOOLEAN, name: variable1, value: \'foo bar?\', defaultValue: true}}';
+                const badStr2 = '${{type: BOOLEAN, name: variable1, value: -49, udefaultValue: false}}';
+
+                expect(() => {
+                    new MarkVariable(badStr1);
+                }).toThrow(new TypeError('variable1 is a BOOLEAN, STRING given'));
+
+                expect(() => {
+                    new MarkVariable(badStr2);
+                }).toThrow(new TypeError('variable1 is a BOOLEAN, NUMBER given'));
+            });
+        });
     });
 
     describe('MarkVariable deserialize()', () => {

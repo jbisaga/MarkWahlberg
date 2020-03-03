@@ -13,7 +13,7 @@ export type MarkVariableValueType = string | number | boolean | null;
 
 const MarkVariableInternalTypePattern = {
     [MarkVariableType.STRING]: () => /'(.*)'/,
-    [MarkVariableType.NUMBER]: () => /\d+/,
+    [MarkVariableType.NUMBER]: () => /^[-+]?[0-9]*\.?[0-9]+$/,
     [MarkVariableType.BOOLEAN]: () => /(true|false)/,
     [MarkVariableType.UNKNOWN]: () => new RegExp(''),
 };
