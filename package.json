@@ -2,7 +2,7 @@
   "name": "mark-wahlberg",
   "version": "0.1.0",
   "description": "A funky bunch of Markdown templating goodness.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "tdd": "npm run test -- --watch",

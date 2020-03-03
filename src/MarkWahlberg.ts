@@ -7,7 +7,7 @@
 
  --------------------------------------------------------------------------------------- */
 
-import {MarkVariable, VARIABLE_REGEX, MarkVariableValueType} from "./MarkVariable";
+import {VARIABLE_REGEX, MarkVariableValueType} from "./MarkVariable";
 import { TemplateVariable } from "./TemplateVariable";
 import { cloneDeep } from "lodash";
 
@@ -56,10 +56,11 @@ export class MarkWahlberg {
         return this.variables;
     }
 
-    getVariableByName(name: string): (TemplateVariable | null) {
+    // TODO: implement if needed
+    /*getVariableByName(name: string): (TemplateVariable | null) {
         const variable = this.variables.find(templateVar => templateVar.variable.name === name);
         return variable || null;
-    }
+    }*/
 
     parse(varValues: VariableValue = {}, strict: boolean = false): string {
         let finalText = this.text;
