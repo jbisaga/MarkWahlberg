@@ -11,7 +11,7 @@ import {VARIABLE_REGEX, MarkVariableValueType} from "./MarkVariable";
 import { TemplateVariable } from "./TemplateVariable";
 import { cloneDeep } from "lodash";
 
-interface VariableValue {
+export interface VariableValue {
     [key: string]: MarkVariableValueType
 }
 
@@ -23,7 +23,7 @@ export class MarkWahlberg {
         this.loadText(text);
     }
 
-    setVariables = ()=>{
+    private setVariables = ()=>{
         let t = this.text;
         const regex = VARIABLE_REGEX();
         // go through text and find variables
@@ -39,7 +39,7 @@ export class MarkWahlberg {
         this.variables = vars;
     };
 
-    loadText(text: string){
+    private loadText(text: string){
         if (text === null || text === undefined){
             throw new Error(`${this.constructor.name}.loadText() cannot be called with null or undefined`)
         }

@@ -1,8 +1,9 @@
 {
   "name": "mark-wahlberg",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A funky bunch of Markdown templating goodness.",
   "main": "dist/index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "jest",
     "tdd": "npm run test -- --watch",
