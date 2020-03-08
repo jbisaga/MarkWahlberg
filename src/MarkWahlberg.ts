@@ -97,9 +97,14 @@ export class MarkWahlberg {
             const before = finalText.slice(0, templateVariable.index);
             let after = finalText.slice(templateVariable.index);
             const textVarRegex = VARIABLE_REGEX();
-            const match: string = textVarRegex.exec(after)[0];
+            const matchArr = textVarRegex.exec(after);
+            let match;
+            if (matchArr){
+                match = matchArr[0];
+            }
 
-            if (variableValue !== undefined){
+
+            if (match && variableValue !== undefined){
                 after = after.replace(match, variableValue);
             }
 

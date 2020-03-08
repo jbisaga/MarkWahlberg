@@ -94,11 +94,20 @@ export class MarkVariable {
         const parts = internalParts.map( partStr => MarkVariable.parseSerializedProp(partStr));
 
         // validate name
-        internalObj.name = parts.find(([key]) => key === 'name')[1];
+        const partsName = parts.find(([key]) => key === 'name');
+        if (partsName){
+            internalObj.name = partsName[1];
+        }
 
         // validate type
-        const givenType: any = parts.find(([key]) => key === 'type')[1];
-        let finalType: MarkVariableType | null = null;
+        const partsType = parts.find(([key]) => key === 'type');
+        let givenType: any;
+        if (partsType){
+            givenType = partsType[1];
+        } else {
+            givenType = MarkVariableType.UNKNOWN;
+        }
+        let finalType: MarkVariableType = MarkVariableType.UNKNOWN;
         for (let type in MarkVariableType){
             if (givenType === type){
                 finalType = givenType;
@@ -144,8 +153,11 @@ export class MarkVariable {
         }
 
         let parseResult = PROP_PATTERN.exec(propStr);
-        let key = parseResult[1];
-        let value = parseResult[2];
+        let key, value;
+        if (parseResult && parseResult.length){
+            key = parseResult[1];
+            value = parseResult[2];
+        }
 
         return [ key, value ];
     };
