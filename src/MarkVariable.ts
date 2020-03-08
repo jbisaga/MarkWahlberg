@@ -42,10 +42,10 @@ export interface DeserializedMarkVariableObject {
 }
 
 export class MarkVariable {
-    name: string;
-    type: MarkVariableType;
-    defaultValue: any;
-    value: any;
+    name: string = '';
+    type: MarkVariableType = MarkVariableType.UNKNOWN;
+    defaultValue: any = null;
+    value: any = null;
 
     /*
         The serialization standard for a MarkVariable is:

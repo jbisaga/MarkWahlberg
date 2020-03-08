@@ -16,8 +16,8 @@ export interface VariableValue {
 }
 
 export class MarkWahlberg {
-    private text: string;
-    private variables: TemplateVariable[];
+    private text: string = '';
+    private variables: TemplateVariable[] = [];
 
     constructor(text = ''){
         this.loadText(text);
