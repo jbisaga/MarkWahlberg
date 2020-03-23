@@ -38,7 +38,7 @@ declare class MarkWahlberg {
 
     getText(): string;
 
-    getVariables: TemplateVariable[];
+    getVariables(): TemplateVariable[];
 
     parse(varValues?: VariableValue, strict?: boolean): string;
 }
