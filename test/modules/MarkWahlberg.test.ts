@@ -51,7 +51,7 @@ describe ('MarkWahlberg', () => {
 
             it ('correctly assigns intrinsic values to variables', () => {
                 const notStrict = mark.parse();
-                const strict = mark.parse({}, true);
+                const strict = mark.parse({strict: true});
 
                 expect(notStrict).toEqual(files.noPassedValues);
                 expect(strict).toEqual(files.noPassedValues);
@@ -60,8 +60,8 @@ describe ('MarkWahlberg', () => {
             it ('correctly assigns given values to variables', () => {
                 const passed = {variable1: 'it\'s a value woo', variable2: -999.999};
 
-                const notStrict = mark.parse(passed);
-                const strict = mark.parse(passed, true);
+                const notStrict = mark.parse({varValues: passed});
+                const strict = mark.parse({varValues: passed, strict: true});
 
                 expect(notStrict).toEqual(files.passedValues);
                 expect(strict).toEqual(files.passedValues);
@@ -72,11 +72,11 @@ describe ('MarkWahlberg', () => {
                 const expectedErrMessage = 'Cannot assign false to variable variable1';
 
                 expect(() => {
-                    mark.parse(passed);
+                    mark.parse({varValues: passed});
                 }).toThrow(new TypeError(expectedErrMessage));
 
                 expect(() => {
-                    mark.parse(passed, true);
+                    mark.parse({varValues: passed, strict: true});
                 }).toThrow(new TypeError(expectedErrMessage));
             })
         })
