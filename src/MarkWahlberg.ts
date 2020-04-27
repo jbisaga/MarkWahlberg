@@ -8,7 +8,7 @@
  --------------------------------------------------------------------------------------- */
 
 import React from "react";
-import {VARIABLE_REGEX, MarkVariableValueType, MarkVariableType} from "./MarkVariable";
+import {VARIABLE_REGEX, MarkVariableValueType, MarkVariableType, MarkVariable} from "./MarkVariable";
 import { TemplateVariable } from "./TemplateVariable";
 import { cloneDeep } from "lodash";
 import { Marked } from '@ts-stack/markdown';
@@ -48,20 +48,24 @@ export class MarkWahlberg {
         this.loadText(text);
     }
 
-    private setVariables = ()=>{
-        let t = this.text;
+    private static getVariablesFromString(str: string): TemplateVariable[] {
         const regex = VARIABLE_REGEX();
         // go through text and find variables
 
         let matchResult;
         let vars = [];
-        while( (matchResult = regex.exec(t)) !== null){
+        while( (matchResult = regex.exec(str)) !== null){
             const match = matchResult[0];
             const startingIdx = regex.lastIndex - match.length;
             vars.push(new TemplateVariable(match, startingIdx));
         }
 
-        this.variables = vars;
+        return vars;
+    };
+
+    private setVariables = ()=>{
+        const t = this.text;
+        this.variables = MarkWahlberg.getVariablesFromString(t);
     };
 
     private loadText(text: string){
