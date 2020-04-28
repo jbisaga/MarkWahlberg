@@ -25,8 +25,9 @@
 /*~ This declaration specifies that the class constructor function
  *~ is the exported object from the file
  */
-import {TemplateVariable} from "./src/TemplateVariable";
-import {VariableValue} from "./src/MarkWahlberg";
+import { TemplateVariable } from "./src/TemplateVariable";
+import { VariableValue } from "./src/MarkWahlberg";
+import { MarkVariable } from "./src/MarkVariable";
 
 export = MarkWahlberg;
 
@@ -41,4 +42,6 @@ declare class MarkWahlberg {
     getVariables(): TemplateVariable[];
 
     parse(varValues?: VariableValue, strict?: boolean): string;
+
+    getVariablesForInnerText(text: string): MarkVariable[];
 }
