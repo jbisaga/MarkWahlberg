@@ -81,5 +81,25 @@ describe ('MarkWahlberg', () => {
             })
         })
     });
+
+    describe('getVariablesForInnerText', () => {
+        let mark: MarkWahlberg;
+
+        beforeEach(() => {
+            const template = `
+                # fooooooo
+                # bar \${{name: variable1, type: STRING, value: 'bar'}}
+                ## heading \${{ name: variable2, type: NUMBER, value: 4 }}
+            `;
+            mark = new MarkWahlberg(template);
+        });
+
+        it('finds existing variable in text regardless of value', () => {
+            const str = `something something \${{ name: variable1, type: STRING, value: 'foo' }} something something`;
+            const vars = mark.getVariablesForInnerText(str);
+            expect(vars).toHaveLength(1);
+            expect(vars[0]).toBe(mark.getVariables()[0].variable);
+        });
+    });
 });
 

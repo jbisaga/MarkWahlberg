@@ -6,8 +6,8 @@ describe('MarkVariable', () => {
             let variable1: MarkVariable;
             let variable2: MarkVariable;
             beforeEach(() => {
-                variable1 = new MarkVariable('${{ name: variable1, type: NUMBER, defaultValue: 10}}');
-                variable2 = new MarkVariable('${{ name: variable2, type: NUMBER, value: 123.45, defaultValue: 10}}');
+                variable1 = new MarkVariable('${{ name: variable1, type: NUMBER, defaultValue: 10  }}');
+                variable2 = new MarkVariable('${{ name: variable2, type: NUMBER, value: 123.45, defaultValue: 10  }}');
             });
 
             it ('assigns type', () => {
@@ -25,8 +25,8 @@ describe('MarkVariable', () => {
             let variable1: MarkVariable;
             let variable2: MarkVariable;
             beforeEach(() => {
-                variable1 = new MarkVariable('${{ name: variable1, type: STRING, defaultValue: \'foo\'}}');
-                variable2 = new MarkVariable('${{ name: variable2, type: STRING, value: \'baz\', defaultValue: \'bat\'}}');
+                variable1 = new MarkVariable('${{ name: variable1, type: STRING, defaultValue: \'foo\' }}');
+                variable2 = new MarkVariable('${{ name: variable2, type: STRING, value: \'baz\', defaultValue: \'bat\' }}');
             });
 
             it ('assigns type', () => {
@@ -45,8 +45,8 @@ describe('MarkVariable', () => {
             let variable1: MarkVariable;
             let variable2: MarkVariable;
             beforeEach(() => {
-                variable1 = new MarkVariable('${{ name: variable1, type: BOOLEAN, defaultValue: true}}');
-                variable2 = new MarkVariable('${{ name: variable2, type: BOOLEAN, value: true, defaultValue: false}}');
+                variable1 = new MarkVariable('${{ name: variable1, type: BOOLEAN, defaultValue: true  }}');
+                variable2 = new MarkVariable('${{ name: variable2, type: BOOLEAN, value: true, defaultValue: false  }}');
             });
 
             it ('assigns type', () => {

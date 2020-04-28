@@ -167,6 +167,17 @@ export class MarkWahlberg {
         return finalText;
     }
 
+    public getVariablesForInnerText(text: string): MarkVariable[]{
+        const potentialVariablesInString = MarkWahlberg.getVariablesFromString(text);
+        const variables = this.getVariables();
+        // compare to actual variables
+        return variables
+            .filter(v => {
+                return potentialVariablesInString.find(pV => pV.variable.name === v.variable.name);
+            })
+            .map(v => v.variable);
+    }
+
     /*render(options: RenderOptions = {}): React.ReactElement {
         const variableComponent: VariableComponent = options.variableComponent || DefaultVariableComponent;
         const varValues: VariableValue = options.varValues || {};

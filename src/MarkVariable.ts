@@ -155,8 +155,8 @@ export class MarkVariable {
         let parseResult = PROP_PATTERN.exec(propStr);
         let key, value;
         if (parseResult && parseResult.length){
-            key = parseResult[1];
-            value = parseResult[2];
+            key = parseResult[1].trim();
+            value = parseResult[2].trim();
         }
 
         return [ key, value ];
