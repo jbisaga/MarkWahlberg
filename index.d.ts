@@ -43,5 +43,5 @@ declare class MarkWahlberg {
 
     parse(varValues?: VariableValue, strict?: boolean): string;
 
-    static getVariablesForInnerText(text: string): MarkVariable[];
+    getVariablesForInnerText(text: string): MarkVariable[];
 }
