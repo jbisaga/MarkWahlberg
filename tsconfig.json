@@ -16,9 +16,12 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "outDir": "dist"
   },
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "src"
   ]

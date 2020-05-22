@@ -167,7 +167,7 @@ export class MarkWahlberg {
         return finalText;
     }
 
-    public getVariablesForInnerText(text: string): MarkVariable[]{
+    getVariablesForInnerText(text: string): MarkVariable[]{
         const potentialVariablesInString = MarkWahlberg.getVariablesFromString(text);
         const variables = this.getVariables();
         // compare to actual variables
