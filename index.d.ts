@@ -12,7 +12,7 @@ export class MarkTemplate {
     getText(): string;
     getVariables(): TemplateVariable[];
     parse(varValues?: VariableValue, strict?: boolean): string;
-    getVariablesForInnerText(text: string): MarkVariable[];
+    getVariablesForInnerText(text: string): TemplateVariable[];
 }
 
 export class MarkVariable {
