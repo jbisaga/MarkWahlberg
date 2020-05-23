@@ -27,21 +27,22 @@
  */
 import { TemplateVariable } from "./src/TemplateVariable";
 import { VariableValue } from "./src/MarkWahlberg";
-import { MarkVariable } from "./src/MarkVariable";
+import { DeserializedMarkVariableObject } from "./src/MarkVariable";
 
-export = MarkWahlberg;
+export namespace MarkWahlberg {
+    export class MarkWahlberg {
+        constructor(text?: string);
+        getText(): string;
+        getVariables(): TemplateVariable[];
+        parse(varValues?: VariableValue, strict?: boolean): string;
+        getVariablesForInnerText(text: string): MarkVariable[];
+    }
 
-/*~ Write your module's methods and properties in this class */
-declare class MarkWahlberg {
-    constructor(text?: string);
-
-    someProperty: string[];
-
-    getText(): string;
-
-    getVariables(): TemplateVariable[];
-
-    parse(varValues?: VariableValue, strict?: boolean): string;
-
-    getVariablesForInnerText(text: string): MarkVariable[];
+    export class MarkVariable {
+        constructor(serializedText: string);
+        static deserialize = (text: string) => DeserializedMarkVariableObject;
+        static parseSerializedProp = (propStr: string) => [any, any];
+        public matchesType = (value: any) => boolean;
+    }
 }
+

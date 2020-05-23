@@ -1,5 +1,7 @@
-import { MarkWahlberg as Mark } from "./MarkWahlberg";
+import { MarkWahlberg } from "./MarkWahlberg";
+import { MarkVariable } from "./MarkVariable";
 
-export const MarkWahlberg = Mark;
-
-export default MarkWahlberg;
+export default {
+    MarkWahlberg,
+    MarkVariable
+};

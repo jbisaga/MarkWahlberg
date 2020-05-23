@@ -225,7 +225,7 @@ export class MarkVariable {
         return '${{' + internalStr + '}}';
     }
 
-    public matchesType(value: any): boolean{
+    public matchesType(value: any): boolean {
         if (this.type === MarkVariableType.STRING){
             return typeof value === 'string';
         }
