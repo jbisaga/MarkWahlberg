@@ -98,7 +98,7 @@ describe ('MarkWahlberg', () => {
             const str = `something something \${{ name: variable1, type: STRING, value: 'foo' }} something something`;
             const vars = mark.getVariablesForInnerText(str);
             expect(vars).toHaveLength(1);
-            expect(vars[0]).toBe(mark.getVariables()[0].variable);
+            expect(vars[0]).toBe(mark.getVariables()[0]);
         });
     });
 });

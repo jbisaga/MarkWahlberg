@@ -57,7 +57,7 @@ export class MarkWahlberg {
         while( (matchResult = regex.exec(str)) !== null){
             const match = matchResult[0];
             const startingIdx = regex.lastIndex - match.length;
-            vars.push(new TemplateVariable(match, startingIdx));
+            vars.push(new TemplateVariable(match, startingIdx, match.length));
         }
 
         return vars;
@@ -167,15 +167,14 @@ export class MarkWahlberg {
         return finalText;
     }
 
-    getVariablesForInnerText(text: string): MarkVariable[]{
+    getVariablesForInnerText(text: string): TemplateVariable[]{
         const potentialVariablesInString = MarkWahlberg.getVariablesFromString(text);
         const variables = this.getVariables();
         // compare to actual variables
         return variables
             .filter(v => {
                 return potentialVariablesInString.find(pV => pV.variable.name === v.variable.name);
-            })
-            .map(v => v.variable);
+            });
     }
 
     /*render(options: RenderOptions = {}): React.ReactElement {
