@@ -7,20 +7,19 @@ import { TemplateVariable } from "./src/TemplateVariable";
 import { VariableValue } from "./src/MarkTemplate";
 import { DeserializedMarkVariableObject } from "./src/MarkVariable";
 
-export namespace MarkWahlberg {
-    export class MarkTemplate {
-        constructor(text?: string);
-        getText(): string;
-        getVariables(): TemplateVariable[];
-        parse(varValues?: VariableValue, strict?: boolean): string;
-        getVariablesForInnerText(text: string): MarkVariable[];
-    }
-
-    export class MarkVariable {
-        constructor(serializedText: string);
-        static deserialize = (text: string) => DeserializedMarkVariableObject;
-        static parseSerializedProp = (propStr: string) => [any, any];
-        public matchesType = (value: any) => boolean;
-    }
+export class MarkTemplate {
+    constructor(text?: string);
+    getText(): string;
+    getVariables(): TemplateVariable[];
+    parse(varValues?: VariableValue, strict?: boolean): string;
+    getVariablesForInnerText(text: string): MarkVariable[];
 }
+
+export class MarkVariable {
+    constructor(serializedText: string);
+    static deserialize = (text: string) => DeserializedMarkVariableObject;
+    static parseSerializedProp = (propStr: string) => [any, any];
+    public matchesType = (value: any) => boolean;
+}
+
 
