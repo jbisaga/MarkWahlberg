@@ -1,7 +1,7 @@
-import { MarkWahlberg } from "./MarkWahlberg";
+import { MarkTemplate } from "./MarkTemplate";
 import { MarkVariable } from "./MarkVariable";
 
 export default {
-    MarkWahlberg,
+    MarkTemplate,
     MarkVariable
 };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { uniqueId } from 'lodash';
-import { VariableRenderProps } from "./MarkWahlberg";
+import { VariableRenderProps } from "./MarkTemplate";
 
 export const DefaultVariableComponent: React.FC<VariableRenderProps> = ({ name, value, defaultValue }) => {
     const [id] = useState<string>(uniqueId());

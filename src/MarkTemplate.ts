@@ -40,7 +40,7 @@ export interface RenderOptions {
 }
 
 
-export class MarkWahlberg {
+export class MarkTemplate {
     private text: string = '';
     private variables: TemplateVariable[] = [];
 
@@ -65,7 +65,7 @@ export class MarkWahlberg {
 
     private setVariables = ()=>{
         const t = this.text;
-        this.variables = MarkWahlberg.getVariablesFromString(t);
+        this.variables = MarkTemplate.getVariablesFromString(t);
     };
 
     private loadText(text: string){
@@ -168,7 +168,7 @@ export class MarkWahlberg {
     }
 
     getVariablesForInnerText(text: string): TemplateVariable[]{
-        const potentialVariablesInString = MarkWahlberg.getVariablesFromString(text);
+        const potentialVariablesInString = MarkTemplate.getVariablesFromString(text);
         const variables = this.getVariables();
         // compare to actual variables
         return variables

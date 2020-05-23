@@ -1,17 +1,17 @@
-import {MarkWahlberg} from "../../src/MarkWahlberg";
+import {MarkTemplate} from "../../src/MarkTemplate";
 import * as fs from "fs";
 const originalFile1Text = fs.readFileSync(__dirname+'/../test-data/markdown1.md').toString('utf8');
 
 describe ('MarkWahlberg', () => {
     describe('property checks', () => {
         it ('gets no variables for constructor with empty string', (done) => {
-            let empty = new MarkWahlberg();
+            let empty = new MarkTemplate();
 
             expect(empty.getVariables()).toHaveLength(0);
             done();
         });
         it ('has empty text for constructor with empty string', (done) => {
-            let empty = new MarkWahlberg();
+            let empty = new MarkTemplate();
 
             expect(empty.getText()).toBe('');
             done();
@@ -19,13 +19,13 @@ describe ('MarkWahlberg', () => {
 
 
         it ('has 2 variables for test Mark text with 2 variables', (done) => {
-            let mark = new MarkWahlberg(originalFile1Text);
+            let mark = new MarkTemplate(originalFile1Text);
             expect(mark.getVariables()).toHaveLength(2);
             done();
         });
 
         it ('assigns correct template indexes for test Mark text', (done) => {
-            let mark = new MarkWahlberg(originalFile1Text);
+            let mark = new MarkTemplate(originalFile1Text);
             expect(mark.getVariables()[0].index).toEqual(6);
             expect(mark.getVariables()[1].index).toEqual(158);
             done();
@@ -34,7 +34,7 @@ describe ('MarkWahlberg', () => {
 
     describe ('parse', () => {
         describe( 'file with only value-given variables', () => {
-            let mark: MarkWahlberg;
+            let mark: MarkTemplate;
             let files: { [key: string]: string };
 
             beforeAll(() => {
@@ -46,7 +46,7 @@ describe ('MarkWahlberg', () => {
             });
 
             beforeEach(() => {
-                mark = new MarkWahlberg(files.initial);
+                mark = new MarkTemplate(files.initial);
             });
 
             it ('correctly assigns intrinsic values to variables', () => {
@@ -83,7 +83,7 @@ describe ('MarkWahlberg', () => {
     });
 
     describe('getVariablesForInnerText', () => {
-        let mark: MarkWahlberg;
+        let mark: MarkTemplate;
 
         beforeEach(() => {
             const template = `
@@ -91,7 +91,7 @@ describe ('MarkWahlberg', () => {
                 # bar \${{name: variable1, type: STRING, value: 'bar'}}
                 ## heading \${{ name: variable2, type: NUMBER, value: 4 }}
             `;
-            mark = new MarkWahlberg(template);
+            mark = new MarkTemplate(template);
         });
 
         it('finds existing variable in text regardless of value', () => {
