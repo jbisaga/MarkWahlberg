@@ -1,7 +1,6 @@
 import { MarkTemplate } from "./MarkTemplate";
 import { MarkVariable } from "./MarkVariable";
 
-export default {
-    MarkTemplate,
-    MarkVariable
-};
+export { MarkTemplate as MarkTemplate };
+export { MarkTemplate as MarkVariable };
+
