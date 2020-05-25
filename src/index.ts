@@ -1,3 +1,3 @@
 export { MarkTemplate } from "./MarkTemplate";
-export { MarkVariable } from "./MarkVariable";
+export { MarkVariable, MarkVariableType } from "./MarkVariable";
 

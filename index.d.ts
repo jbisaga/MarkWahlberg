@@ -5,7 +5,7 @@
 
 import { TemplateVariable } from "./src/TemplateVariable";
 import { VariableValue } from "./src/MarkTemplate";
-import {DeserializedMarkVariableObject, MarkVariableType} from "./src/MarkVariable";
+import {DeserializedMarkVariableObject} from "./src/MarkVariable";
 
 export class MarkTemplate {
     constructor(text?: string);
@@ -23,8 +23,8 @@ export class MarkVariable {
 
     name: string;
     type: MarkVariableType;
-    defaultValue: any;
+    value: any;
     defaultValue: any;
 }
 
-
+export { MarkVariableType } from './src/MarkVariable';

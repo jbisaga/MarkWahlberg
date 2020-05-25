@@ -1,6 +1,6 @@
 {
   "name": "mark-wahlberg",
-  "version": "0.3.8",
+  "version": "0.3.10",
   "description": "A funky bunch of Markdown templating goodness.",
   "main": "dist/index.js",
   "types": "index.d.ts",
