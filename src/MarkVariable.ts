@@ -1,4 +1,4 @@
-export const VARIABLE_REGEX = () => /\${{.+}}/g;
+export const VARIABLE_REGEX = () => /\$\{\{.+\}\}/g;
 // const INTERNAL_VARIABLE_VALUE_PROP = 'value';
 // const INTERNAL_VARIABLE_TYPE_PROP = '__markVarInternalType';
 
