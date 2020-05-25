@@ -5,7 +5,7 @@
 
 import { TemplateVariable } from "./src/TemplateVariable";
 import { VariableValue } from "./src/MarkTemplate";
-import { DeserializedMarkVariableObject } from "./src/MarkVariable";
+import {DeserializedMarkVariableObject, MarkVariableType} from "./src/MarkVariable";
 
 export class MarkTemplate {
     constructor(text?: string);
@@ -20,6 +20,11 @@ export class MarkVariable {
     static deserialize = (text: string) => DeserializedMarkVariableObject;
     static parseSerializedProp = (propStr: string) => [any, any];
     public matchesType = (value: any) => boolean;
+
+    name: string;
+    type: MarkVariableType;
+    defaultValue: any;
+    defaultValue: any;
 }
 
 
