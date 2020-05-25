@@ -95,10 +95,12 @@ describe ('MarkWahlberg', () => {
         });
 
         it('finds existing variable in text regardless of value', () => {
-            const str = `something something \${{ name: variable1, type: STRING, value: 'foo' }} something something`;
+            const str = "something something ${{ name: variable1, type: STRING, value: 'foo' }} something something";
             const vars = mark.getVariablesForInnerText(str);
             expect(vars).toHaveLength(1);
-            expect(vars[0]).toBe(mark.getVariables()[0]);
+            expect(vars[0].variable.name).toBe(mark.getVariables()[0].variable.name);
+            expect(vars[0].strLength).toBe(50);
+            expect(vars[0].index).toBe(20);
         });
     });
 });

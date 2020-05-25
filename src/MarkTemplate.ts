@@ -169,11 +169,11 @@ export class MarkTemplate {
 
     getVariablesForInnerText(text: string): TemplateVariable[]{
         const potentialVariablesInString = MarkTemplate.getVariablesFromString(text);
-        const variables = this.getVariables();
+        const variableObjs = this.getVariables().map(tV => tV.variable);
         // compare to actual variables
-        return variables
-            .filter(v => {
-                return potentialVariablesInString.find(pV => pV.variable.name === v.variable.name);
+        return potentialVariablesInString
+            .filter(tV => {
+                return variableObjs.find(v => v.name === tV.variable.name);
             });
     }
 
